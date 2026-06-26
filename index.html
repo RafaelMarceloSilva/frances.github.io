@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Français Complet — A0 até C2</title>
+  <meta name="description" content="Aprenda francês do zero ao avançado: fonética, vocabulário, gramática, conversação, leitura, literatura e cultura francesa.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;1,400&family=Work+Sans:wght@400;500;600;700&family=Noto+Sans:wght@400;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;1,400&family=Work+Sans:wght@400;500;600;700&family=Noto+Sans:wght@400;700&display=swap"></noscript>
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Dados — carregados como window.* para funcionar sem servidor -->
+  <script src="data/vocabulary.js"></script>
+  <script src="data/grammar.js"></script>
+  <script src="data/dialogues.js"></script>
+  <script src="data/readings.js"></script>
+  <script src="data/phonetics.js"></script>
+  <script src="data/culture.js"></script>
+  <script src="data/literature.js"></script>
+  <script src="data/verbs.js"></script>
+  <script src="data/achievements.js"></script>
+  <script src="data/tests.js"></script>
+  <script src="data/immersion.js"></script>
+
+  <!-- Motor JS -->
+  <script src="js/storage.js"></script>
+  <script src="js/speech.js"></script>
+  <script src="js/pages.js"></script>
+  <script src="js/app.js"></script>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Ir para o conteúdo</a>
+
+<!-- ══ Cabeçalho ══ -->
+<header id="app-header">
+  <button id="hamburger" aria-label="Menu">☰</button>
+  <div id="app-logo">🇫🇷 Français Complet</div>
+  <div class="header-spacer"></div>
+  <div id="xp-bar" title="XP"><div id="xp-bar-fill" style="width:0%"></div></div>
+  <span id="header-level" style="margin-left:8px">Nv. 1</span>
+  <span id="header-xp" style="margin-left:6px">0 XP</span>
+  <button id="btn-theme" title="Alternar tema" aria-label="Alternar tema claro/escuro">☀️</button>
+</header>
+
+<!-- ══ Sidebar ══ -->
+<nav id="sidebar" aria-label="Menu de navegação">
+  <div class="sidebar-section-label">Início</div>
+  <div class="nav-item" data-page="dashboard" tabindex="0">
+    <span class="nav-icon">🗺️</span> Dashboard
+  </div>
+
+  <div class="sidebar-section-label">Sons e Palavras</div>
+  <div class="nav-item" data-page="phonetics" tabindex="0">
+    <span class="nav-icon">🎤</span> Fonética
+  </div>
+  <div class="nav-item" data-page="vocabulary" tabindex="0">
+    <span class="nav-icon">📖</span> Vocabulário
+  </div>
+  <div class="nav-item" data-page="flashcards" tabindex="0">
+    <span class="nav-icon">🃏</span> Flashcards
+  </div>
+
+  <div class="sidebar-section-label">Gramática e Conversação</div>
+  <div class="nav-item" data-page="grammar" tabindex="0">
+    <span class="nav-icon">📐</span> Gramática
+  </div>
+  <div class="nav-item" data-page="conversation" tabindex="0">
+    <span class="nav-icon">🗣️</span> Conversação
+  </div>
+  <div class="nav-item" data-page="reading" tabindex="0">
+    <span class="nav-icon">📄</span> Leitura
+  </div>
+
+  <div class="sidebar-section-label">Cultura e Literatura</div>
+  <div class="nav-item" data-page="culture" tabindex="0">
+    <span class="nav-icon">🎨</span> Cultura
+  </div>
+  <div class="nav-item" data-page="literature" tabindex="0">
+    <span class="nav-icon">✒️</span> Literatura
+  </div>
+  <div class="nav-item" data-page="immersion" tabindex="0">
+    <span class="nav-icon">🌊</span> Imersão
+  </div>
+
+  <div class="sidebar-section-label">Avaliação</div>
+  <div class="nav-item" data-page="tests" tabindex="0">
+    <span class="nav-icon">📋</span> Testes CEFR
+  </div>
+  <div class="nav-item" data-page="achievements" tabindex="0">
+    <span class="nav-icon">🏆</span> Conquistas
+  </div>
+  <div class="nav-item" data-page="lab" tabindex="0">
+    <span class="nav-icon">⚗️</span> Laboratório
+  </div>
+
+  <!-- Acessibilidade: tamanho de fonte -->
+  <div class="sidebar-settings">
+    <span style="font-size:0.72rem;color:var(--text-muted);width:100%">Fonte:</span>
+    <button data-font="small"  title="Fonte pequena">A</button>
+    <button data-font="medium" title="Fonte média" class="active">A</button>
+    <button data-font="large"  title="Fonte grande" style="font-size:1.05em">A</button>
+  </div>
+</nav>
+
+<!-- ══ Conteúdo principal ══ -->
+<main id="main-content">
+
+  <!-- Dashboard -->
+  <section id="page-dashboard" class="page">
+    <div class="page-header"><h1>🗺️ Carnet de bord</h1></div>
+    <p style="color:var(--text-muted)">Carregando…</p>
+  </section>
+
+  <!-- Fonética -->
+  <section id="page-phonetics" class="page hidden">
+    <div class="page-header"><h1>🎤 Fonética</h1></div>
+    <p style="color:var(--text-muted)">Carregando…</p>
+  </section>
+
+  <!-- Vocabulário -->
+  <section id="page-vocabulary" class="page hidden">
+    <div class="page-header"><h1>📖 Vocabulário</h1></div>
+    <p style="color:var(--text-muted)">Carregando…</p>
+  </section>
+
+  <!-- Gramática -->
+  <section id="page-grammar" class="page hidden">
+    <div class="page-header"><h1>📐 Gramática</h1></div>
+    <p style="color:var(--text-muted)">Carregando…</p>
+  </section>
+
+  <!-- Conversação -->
+  <section id="page-conversation" class="page hidden">
+    <div class="page-header"><h1>🗣️ Conversação</h1></div>
+    <p style="color:var(--text-muted)">Carregando…</p>
+  </section>
+
+  <!-- Leitura -->
+  <section id="page-reading" class="page hidden">
+    <div class="page-header"><h1>📄 Leitura</h1></div>
+    <p style="color:var(--text-muted)">Carregando…</p>
+  </section>
+
+  <!-- Flashcards -->
+  <section id="page-flashcards" class="page hidden">
+    <div class="page-header"><h1>🃏 Flashcards</h1></div>
+    <p style="color:var(--text-muted)">Carregando…</p>
+  </section>
+
+  <!-- Testes -->
+  <section id="page-tests" class="page hidden">
+    <div class="page-header"><h1>📋 Testes CEFR</h1></div>
+    <p style="color:var(--text-muted)">Carregando…</p>
+  </section>
+
+  <!-- Laboratório -->
+  <section id="page-lab" class="page hidden">
+    <div class="page-header"><h1>⚗️ Laboratório</h1></div>
+    <p style="color:var(--text-muted)">Carregando…</p>
+  </section>
+
+  <!-- Cultura -->
+  <section id="page-culture" class="page hidden">
+    <div class="page-header"><h1>🎨 Cultura</h1></div>
+    <p style="color:var(--text-muted)">Carregando…</p>
+  </section>
+
+  <!-- Literatura -->
+  <section id="page-literature" class="page hidden">
+    <div class="page-header"><h1>✒️ Literatura</h1></div>
+    <p style="color:var(--text-muted)">Carregando…</p>
+  </section>
+
+  <!-- Imersão -->
+  <section id="page-immersion" class="page hidden">
+    <div class="page-header"><h1>🌊 Imersão</h1></div>
+    <p style="color:var(--text-muted)">Carregando…</p>
+  </section>
+
+  <!-- Conquistas -->
+  <section id="page-achievements" class="page hidden">
+    <div class="page-header"><h1>🏆 Conquistas</h1></div>
+    <p style="color:var(--text-muted)">Carregando…</p>
+  </section>
+
+</main>
+
+<!-- ══ UI Global ══ -->
+<div id="toast" role="alert" aria-live="polite"></div>
+
+<div id="achievement-popup" role="status" aria-live="polite">
+  <div class="ach-icon">🏅</div>
+  <div class="ach-title">Conquista desbloqueada!</div>
+  <div class="ach-desc"></div>
+</div>
+
+<script>
+  // Navegação por teclado na sidebar
+  document.querySelectorAll(".nav-item").forEach(el => {
+    el.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        Router.navigate(el.dataset.page);
+      }
+    });
+  });
+
+  // Inicializa o app
+  document.addEventListener("DOMContentLoaded", () => {
+    App.init();
+    // Conquista de primeiro acesso
+    setTimeout(() => {
+      Storage.unlockAchievement("first_lesson");
+    }, 1500);
+  });
+
+  // Botão scroll-to-top
+  window.addEventListener("scroll", () => {
+    const btn = document.getElementById("btn-top");
+    if (btn) btn.classList.toggle("visible", window.scrollY > 300);
+  });
+</script>
+<button id="btn-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Voltar ao topo" aria-label="Voltar ao topo">↑</button>
+</body>
+</html>

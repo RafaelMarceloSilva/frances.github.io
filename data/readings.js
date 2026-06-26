@@ -1,0 +1,64 @@
+/* ==========================================================================
+   FRANÇAIS COMPLET — Banco de Leitura Graduada
+   Estrutura: id, level, title, text_fr (parágrafos \n\n), text_pt (tradução),
+   questions: [{q, options, answer}]
+   ========================================================================== */
+window.READINGS_DATA = [
+{
+  id:"r01", level:"A1", title:"Ma journée",
+  text_fr:"Je m'appelle Camille. J'habite à Toulouse avec ma famille.\n\nLe matin, je me réveille à sept heures. Je prends un café et un croissant. Ensuite, je vais au travail en vélo.\n\nÀ midi, je mange avec mes collègues dans un petit restaurant. Le soir, je rentre chez moi vers dix-huit heures. J'aime cuisiner et regarder des films.",
+  text_pt:"Meu nome é Camille. Eu moro em Toulouse com minha família.\n\nDe manhã, eu acordo às sete horas. Eu tomo um café e um croissant. Depois, eu vou ao trabalho de bicicleta.\n\nAo meio-dia, eu como com meus colegas em um restaurante pequeno. À noite, eu volto para casa por volta das dezoito horas. Eu gosto de cozinhar e assistir filmes.",
+  questions:[
+    {q:"À quelle heure Camille se réveille-t-elle ?", options:["6h","7h","8h"], answer:"7h"},
+    {q:"Comment va-t-elle au travail ?", options:["En voiture","En vélo","À pied"], answer:"En vélo"},
+    {q:"Qu'est-ce qu'elle aime faire le soir ?", options:["Lire","Cuisiner et regarder des films","Faire du sport"], answer:"Cuisiner et regarder des films"}
+  ]
+},
+{
+  id:"r02", level:"A2", title:"Un week-end à la campagne",
+  text_fr:"Le week-end dernier, je suis allé chez mes grands-parents, à la campagne. Le voyage a duré deux heures en train.\n\nLà-bas, l'air est plus frais qu'en ville. Samedi matin, nous avons fait une promenade dans les bois avec le chien. L'après-midi, ma grand-mère a préparé une tarte aux pommes délicieuse.\n\nLe dimanche, il a plu toute la journée, alors nous sommes restés à la maison pour jouer aux cartes. C'était un week-end simple, mais très agréable.",
+  text_pt:"No fim de semana passado, eu fui à casa dos meus avós, no campo. A viagem durou duas horas de trem.\n\nLá, o ar é mais fresco que na cidade. No sábado de manhã, fizemos uma caminhada na mata com o cachorro. À tarde, minha avó preparou uma torta de maçã deliciosa.\n\nNo domingo, choveu o dia todo, então ficamos em casa para jogar cartas. Foi um fim de semana simples, mas muito agradável.",
+  questions:[
+    {q:"Combien de temps a duré le voyage ?", options:["Une heure","Deux heures","Trois heures"], answer:"Deux heures"},
+    {q:"Qu'est-ce qu'ils ont fait samedi matin ?", options:["Une promenade dans les bois","Du vélo","Des courses"], answer:"Une promenade dans les bois"},
+    {q:"Pourquoi sont-ils restés à la maison dimanche ?", options:["Ils étaient malades","Il a plu","Ils étaient fatigués"], answer:"Il a plu"}
+  ]
+},
+{
+  id:"r03", level:"B1", title:"Le télétravail, une révolution silencieuse",
+  text_fr:"Depuis quelques années, le télétravail s'est imposé dans de nombreuses entreprises françaises. Ce qui était autrefois une exception réservée à certains métiers est devenu une pratique courante pour des millions de salariés.\n\nLes avantages sont nombreux : moins de temps perdu dans les transports, plus de flexibilité dans l'organisation de la journée, et souvent une meilleure concentration. Cependant, le télétravail pose aussi des défis. Beaucoup de salariés se plaignent d'un sentiment d'isolement, et la frontière entre vie professionnelle et vie privée devient parfois floue.\n\nLes entreprises cherchent donc un équilibre, en proposant souvent un modèle hybride : deux ou trois jours au bureau, le reste à la maison. Cette organisation semble convenir à la majorité des employés interrogés dans les sondages récents.",
+  text_pt:"Nos últimos anos, o trabalho remoto se consolidou em muitas empresas francesas. O que antes era uma exceção restrita a certas profissões se tornou uma prática comum para milhões de funcionários.\n\nAs vantagens são muitas: menos tempo perdido no trânsito, mais flexibilidade na organização do dia, e muitas vezes mais concentração. No entanto, o trabalho remoto também traz desafios. Muitos funcionários reclamam de uma sensação de isolamento, e a fronteira entre vida profissional e pessoal às vezes fica turva.\n\nAs empresas, então, buscam um equilíbrio, propondo frequentemente um modelo híbrido: dois ou três dias no escritório, o resto em casa. Essa organização parece agradar a maioria dos funcionários entrevistados em pesquisas recentes.",
+  questions:[
+    {q:"Quel est l'un des avantages du télétravail mentionné ?", options:["Plus de réunions","Moins de temps de transport","Un meilleur salaire"], answer:"Moins de temps de transport"},
+    {q:"Quel défi est associé au télétravail ?", options:["Le sentiment d'isolement","Le manque de matériel","Les embouteillages"], answer:"Le sentiment d'isolement"},
+    {q:"Quel modèle les entreprises proposent-elles souvent ?", options:["100% à distance","Un modèle hybride","100% au bureau"], answer:"Un modèle hybride"}
+  ]
+},
+{
+  id:"r04", level:"B2", title:"La gastronomie française et son patrimoine",
+  text_fr:"En 2010, le « repas gastronomique des Français » a été inscrit au patrimoine culturel immatériel de l'humanité par l'UNESCO. Cette reconnaissance ne récompense pas un plat particulier, mais bien une pratique sociale : l'art de bien manger ensemble, dans le respect d'un certain rituel.\n\nCe rituel comprend plusieurs éléments caractéristiques : le choix soigné des produits, l'accord entre les mets et les vins, la décoration de la table, et surtout la convivialité qui entoure le repas. Manger, en France, n'est pas seulement se nourrir ; c'est un moment de partage et de transmission culturelle entre les générations.\n\nCependant, certains observateurs s'inquiètent de l'érosion progressive de ces traditions, notamment chez les jeunes générations davantage tournées vers la restauration rapide et les repas pris sur le pouce. Les défenseurs du patrimoine gastronomique appellent donc à préserver ce savoir-faire, qui constitue, selon eux, un véritable pilier de l'identité nationale.",
+  text_pt:"Em 2010, a 'refeição gastronômica dos franceses' foi inscrita no patrimônio cultural imaterial da humanidade pela UNESCO. Esse reconhecimento não premia um prato específico, mas sim uma prática social: a arte de comer bem em conjunto, respeitando certo ritual.\n\nEsse ritual envolve vários elementos característicos: a escolha cuidadosa dos produtos, a harmonização entre pratos e vinhos, a decoração da mesa e, sobretudo, a convivência ao redor da refeição. Comer, na França, não é apenas se alimentar; é um momento de compartilhamento e transmissão cultural entre gerações.\n\nNo entanto, alguns observadores se preocupam com a erosão progressiva dessas tradições, especialmente entre as gerações mais jovens, mais voltadas para fast-food e refeições rápidas. Os defensores do patrimônio gastronômico pedem, portanto, a preservação desse conhecimento, que constitui, segundo eles, um verdadeiro pilar da identidade nacional.",
+  questions:[
+    {q:"Qu'est-ce qui a été inscrit au patrimoine de l'UNESCO en 2010 ?", options:["Un plat français spécifique","Le repas gastronomique des Français","La baguette"], answer:"Le repas gastronomique des Français"},
+    {q:"Que craignent certains observateurs ?", options:["La hausse des prix","L'érosion des traditions chez les jeunes","Le manque de restaurants"], answer:"L'érosion des traditions chez les jeunes"}
+  ]
+},
+{
+  id:"r05", level:"C1", title:"L'intelligence artificielle et l'avenir du travail",
+  text_fr:"L'essor fulgurant de l'intelligence artificielle générative bouleverse les économies contemporaines à un rythme sans précédent. Si certains y voient une opportunité inédite d'accroître la productivité, d'autres redoutent une vague de destructions d'emplois comparable, voire supérieure, à celle provoquée par les révolutions industrielles précédentes.\n\nLes économistes restent divisés quant à l'ampleur réelle de cette transformation. Plusieurs études suggèrent que loin de simplement remplacer les travailleurs, l'IA redéfinit la nature même des tâches : les emplois ne disparaissent pas nécessairement, mais se transforment en profondeur, exigeant de nouvelles compétences, notamment dans la supervision, l'interprétation critique des résultats algorithmiques et la créativité.\n\nFace à cette mutation, les pouvoirs publics sont appelés à repenser les systèmes de formation continue et de protection sociale. Il s'agit, selon de nombreux experts, d'un défi sociétal majeur, dont la gestion déterminera en grande partie la cohésion sociale des décennies à venir.",
+  text_pt:"O crescimento fulminante da inteligência artificial generativa transforma as economias contemporâneas em um ritmo sem precedentes. Se alguns veem nisso uma oportunidade inédita de aumentar a produtividade, outros temem uma onda de destruição de empregos comparável, ou até superior, à provocada pelas revoluções industriais anteriores.\n\nOs economistas permanecem divididos quanto à real extensão dessa transformação. Vários estudos sugerem que, longe de simplesmente substituir os trabalhadores, a IA redefine a própria natureza das tarefas: os empregos não desaparecem necessariamente, mas se transformam profundamente, exigindo novas competências, sobretudo em supervisão, interpretação crítica dos resultados algorítmicos e criatividade.\n\nDiante dessa mudança, o poder público é chamado a repensar os sistemas de formação continuada e proteção social. Trata-se, segundo muitos especialistas, de um grande desafio social, cuja gestão determinará em grande parte a coesão social das próximas décadas.",
+  questions:[
+    {q:"Selon le texte, l'IA fait-elle uniquement disparaître les emplois ?", options:["Oui, totalement","Non, elle transforme aussi la nature des tâches","Le texte ne le dit pas"], answer:"Non, elle transforme aussi la nature des tâches"},
+    {q:"Que sont appelés à repenser les pouvoirs publics ?", options:["Les impôts","La formation continue et la protection sociale","Le système électoral"], answer:"La formation continue et la protection sociale"}
+  ]
+},
+{
+  id:"r06", level:"C2", title:"Sur la mémoire et l'identité",
+  text_fr:"La mémoire, loin d'être un simple dépôt d'informations passées, se révèle être une faculté éminemment reconstructive. Chaque acte de souvenir implique une réinterprétation, consciente ou non, des événements vécus, modelée par notre état présent, nos désirs et les récits que nous nous racontons à nous-mêmes.\n\nCette plasticité du souvenir soulève une question philosophique fondamentale : dans quelle mesure notre identité, perçue comme continue et cohérente, n'est-elle pas elle-même une construction narrative, perpétuellement révisée à la lumière de nouvelles expériences ? Les travaux en neurosciences cognitives confirment d'ailleurs cette hypothèse, en montrant que le simple acte de se remémorer un événement peut en altérer durablement la trace mnésique.\n\nAinsi, loin de menacer notre sentiment d'identité, cette malléabilité de la mémoire pourrait au contraire en constituer la condition même de possibilité : c'est précisément parce que nous pouvons réviser notre passé que nous demeurons capables de nous projeter, avec cohérence, vers un avenir qui n'est pas encore écrit.",
+  text_pt:"A memória, longe de ser um simples depósito de informações passadas, revela-se uma faculdade eminentemente reconstrutiva. Cada ato de lembrança envolve uma reinterpretação, consciente ou não, dos eventos vividos, moldada pelo nosso estado presente, nossos desejos e as narrativas que contamos a nós mesmos.\n\nEssa plasticidade da lembrança levanta uma questão filosófica fundamental: em que medida nossa identidade, percebida como contínua e coerente, não é ela mesma uma construção narrativa, perpetuamente revisada à luz de novas experiências? Os trabalhos em neurociência cognitiva confirmam, aliás, essa hipótese, mostrando que o simples ato de relembrar um evento pode alterar duravelmente seu traço mnemônico.\n\nAssim, longe de ameaçar nosso senso de identidade, essa maleabilidade da memória poderia, ao contrário, constituir sua própria condição de possibilidade: é precisamente porque podemos revisar nosso passado que permanecemos capazes de nos projetar, com coerência, rumo a um futuro ainda não escrito.",
+  questions:[
+    {q:"Selon le texte, la mémoire est :", options:["Un dépôt fixe d'informations","Une faculté reconstructive","Un mécanisme purement biologique sans lien avec l'identité"], answer:"Une faculté reconstructive"},
+    {q:"Que confirment les neurosciences cognitives selon l'auteur ?", options:["Que la mémoire est immuable","Que se remémorer peut altérer le souvenir","Que la mémoire n'existe pas vraiment"], answer:"Que se remémorer peut altérer le souvenir"}
+  ]
+}
+];

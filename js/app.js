@@ -1,178 +1,219 @@
 /* ==========================================================================
-   FRANÇAIS COMPLET — router.js + app.js
-   Roteador hash simples e inicialização geral do app.
+   FRANÇAIS COMPLET — app.js v2
+   Router hash, App init, gamificação, sidebar responsiva
    ========================================================================== */
 
 /* ── Router ── */
-var Router = (() => {
-  const routes = {};
-  let current = null;
+var Router = (function () {
+  var self = {};
+  var routes = {};
+  var current = null;
 
-  function on(hash, fn) { routes[hash] = fn; }
+  self.on = function(hash, fn) { routes[hash] = fn; };
+  self.navigate = function(hash) { window.location.hash = hash; };
 
-  function navigate(hash) {
-    window.location.hash = hash;
-  }
-
-  function resolve() {
-    const hash = window.location.hash.slice(1) || "dashboard";
-    const [page, ...params] = hash.split("/");
-    // Oculta todas as seções
-    document.querySelectorAll(".page").forEach(el => el.classList.add("hidden"));
-    // Atualiza nav ativo
-    document.querySelectorAll(".nav-item").forEach(el => {
+  self.resolve = function() {
+    var raw = window.location.hash.slice(1) || "dashboard";
+    var parts = raw.split("/");
+    var page = parts[0];
+    document.querySelectorAll(".page").forEach(function(el){ el.classList.add("hidden"); });
+    document.querySelectorAll(".nav-item").forEach(function(el){
       el.classList.toggle("active", el.dataset.page === page);
     });
     current = page;
-    if (routes[page]) routes[page](params);
+    if (routes[page]) routes[page](parts.slice(1));
     else if (routes["404"]) routes["404"]();
-    // Scroll topo
     window.scrollTo(0, 0);
-  }
+    // Fecha sidebar mobile ao navegar
+    var sb = document.getElementById("sidebar");
+    if (sb) sb.classList.remove("open");
+  };
 
-  function init() {
-    window.addEventListener("hashchange", resolve);
-    resolve();
-  }
-
-  function getCurrent() { return current; }
-
-  return { on, navigate, init, getCurrent };
+  self.init = function() {
+    window.addEventListener("hashchange", self.resolve);
+    self.resolve();
+  };
+  self.getCurrent = function() { return current; };
+  return self;
 })();
 
-/* ── App Principal ── */
-var App = (() => {
-  function showToast(msg, type = "info", duration = 3000) {
-    const toast = document.getElementById("toast");
+/* ── App ── */
+var App = (function () {
+  var self = {};
+  self._toastTimer = null;
+
+  self.showToast = function(msg, type, duration) {
+    type = type || "info"; duration = duration || 3000;
+    var toast = document.getElementById("toast");
     if (!toast) return;
     toast.textContent = msg;
     toast.className = "toast show " + type;
-    clearTimeout(App._toastTimer);
-    App._toastTimer = setTimeout(() => toast.classList.remove("show"), duration);
-  }
+    clearTimeout(self._toastTimer);
+    self._toastTimer = setTimeout(function(){ toast.classList.remove("show"); }, duration);
+  };
 
-  function showAchievement(id) {
+  self.showAchievement = function(id) {
     if (!window.ACHIEVEMENTS) return;
-    const a = window.ACHIEVEMENTS.find(x => x.id === id);
+    var a = window.ACHIEVEMENTS.find(function(x){ return x.id === id; });
     if (!a) return;
-    const el = document.getElementById("achievement-popup");
+    var el = document.getElementById("achievement-popup");
     if (!el) return;
     el.querySelector(".ach-icon").textContent = a.icon;
     el.querySelector(".ach-title").textContent = a.title;
     el.querySelector(".ach-desc").textContent = a.desc;
     el.classList.add("show");
-    setTimeout(() => el.classList.remove("show"), 4000);
-  }
+    setTimeout(function(){ el.classList.remove("show"); }, 4500);
+  };
 
-  function checkAchievements() {
-    const p = Storage.getProfile();
-    const learned = Object.keys(Storage.getLearnedWords()).length;
-    const checks = [
-      ["vocab100",  learned >= 100],
-      ["vocab300",  learned >= 300],
-      ["streak3",   p.streak >= 3],
-      ["streak7",   p.streak >= 7],
-      ["streak30",  p.streak >= 30],
+  self.checkAchievements = function() {
+    var p = Storage.getProfile();
+    var learned = Object.keys(Storage.getLearnedWords()).length;
+    var checks = [
+      ["first_lesson",   true],
+      ["vocab100",       learned >= 100],
+      ["vocab300",       learned >= 300],
+      ["streak3",        (p.streak||0) >= 3],
+      ["streak7",        (p.streak||0) >= 7],
+      ["streak30",       (p.streak||0) >= 30],
+      ["dialogue5",      Object.keys(Storage.getModuleProgress("dialogue")).length >= 5],
+      ["dialogue20",     Object.keys(Storage.getModuleProgress("dialogue")).length >= 20],
+      ["reading_all",    Object.keys(Storage.getModuleProgress("reading")).length >= 6],
     ];
-    checks.forEach(([id, cond]) => {
-      if (cond) {
-        const isNew = Storage.unlockAchievement(id);
-        if (isNew) showAchievement(id);
+    checks.forEach(function(pair) {
+      if (pair[1]) {
+        var isNew = Storage.unlockAchievement(pair[0]);
+        if (isNew) self.showAchievement(pair[0]);
       }
     });
-  }
+  };
 
-  function updateXPBar() {
-    const p = Storage.getProfile();
-    const el = document.getElementById("xp-bar-fill");
-    const lvlEl = document.getElementById("header-level");
-    const xpEl = document.getElementById("header-xp");
-    if (!el || !window.XP_LEVELS) return;
-    const cur = window.XP_LEVELS.find(l => l.level === p.level);
-    const next = window.XP_LEVELS.find(l => l.level === p.level + 1);
-    const base = cur ? cur.xpRequired : 0;
-    const cap = next ? next.xpRequired : base + 100;
-    const pct = Math.min(100, ((p.xp - base) / (cap - base)) * 100);
-    el.style.width = pct + "%";
+  self.updateXPBar = function() {
+    var p = Storage.getProfile();
+    var fillEl = document.getElementById("xp-bar-fill");
+    var lvlEl = document.getElementById("header-level");
+    var xpEl = document.getElementById("header-xp");
+    if (!window.XP_LEVELS) return;
+    var cur  = window.XP_LEVELS.find(function(l){ return l.level === p.level; }) || { xpRequired:0 };
+    var next = window.XP_LEVELS.find(function(l){ return l.level === p.level + 1; });
+    var base = cur.xpRequired;
+    var cap  = next ? next.xpRequired : base + 100;
+    var pct  = Math.min(100, Math.max(0, ((p.xp - base) / (cap - base)) * 100));
+    if (fillEl) fillEl.style.width = pct + "%";
     if (lvlEl) lvlEl.textContent = "Nv. " + p.level;
-    if (xpEl) xpEl.textContent = p.xp + " XP";
-  }
+    if (xpEl) xpEl.textContent = (p.xp || 0) + " XP";
+    // Atualiza badge de missões no nav
+    self.updateMissionBadge();
+  };
 
-  function init() {
+  self.updateMissionBadge = function() {
+    var badge = document.getElementById("mission-badge");
+    if (!badge) return;
+    var summary = Storage.getMissionSummary();
+    var remaining = summary.total - summary.done;
+    if (remaining > 0) {
+      badge.textContent = remaining;
+      badge.style.display = "inline-flex";
+    } else {
+      badge.style.display = "none";
+    }
+  };
+
+  self.init = function() {
     Speech.init();
     Storage.updateStreak();
-    checkAchievements();
-    updateXPBar();
+    self.updateXPBar();
 
-    // Tema claro/escuro
-    const savedTheme = localStorage.getItem("fc_theme") || "dark";
+    // ── Tema ──
+    var savedTheme = localStorage.getItem("fc_theme") || "dark";
     document.documentElement.setAttribute("data-theme", savedTheme);
-    const themeBtn = document.getElementById("btn-theme");
+    var themeBtn = document.getElementById("btn-theme");
     if (themeBtn) {
       themeBtn.textContent = savedTheme === "dark" ? "☀️" : "🌙";
-      themeBtn.addEventListener("click", () => {
-        const t = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      themeBtn.addEventListener("click", function() {
+        var t = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
         document.documentElement.setAttribute("data-theme", t);
         localStorage.setItem("fc_theme", t);
         themeBtn.textContent = t === "dark" ? "☀️" : "🌙";
       });
     }
 
-    // Tamanho de fonte
-    const fsBtns = document.querySelectorAll("[data-font]");
-    fsBtns.forEach(btn => {
-      btn.addEventListener("click", () => {
-        const sizes = { small: "14px", medium: "16px", large: "19px" };
-        document.documentElement.style.fontSize = sizes[btn.dataset.font] || "16px";
-        localStorage.setItem("fc_font", btn.dataset.font);
-        fsBtns.forEach(b => b.classList.toggle("active", b === btn));
-      });
-    });
-    const savedFont = localStorage.getItem("fc_font");
-    if (savedFont) {
-      const sizes = { small: "14px", medium: "16px", large: "19px" };
-      document.documentElement.style.fontSize = sizes[savedFont] || "16px";
-    }
-
-    // Nav mobile
-    const hamburger = document.getElementById("hamburger");
-    const sidebar = document.getElementById("sidebar");
-    if (hamburger && sidebar) {
-      hamburger.addEventListener("click", () => sidebar.classList.toggle("open"));
-      document.addEventListener("click", e => {
-        if (!sidebar.contains(e.target) && e.target !== hamburger) {
-          sidebar.classList.remove("open");
-        }
-      });
-    }
-
-    // Nav links
-    document.querySelectorAll(".nav-item").forEach(el => {
-      el.addEventListener("click", (e) => {
-        e.preventDefault();
-        Router.navigate(el.dataset.page);
-        if (sidebar) sidebar.classList.remove("open");
+    // ── Tamanho de fonte ──
+    var savedFont = localStorage.getItem("fc_font") || "medium";
+    var fontSizes = { small:"14px", medium:"16px", large:"19px" };
+    document.documentElement.style.fontSize = fontSizes[savedFont] || "16px";
+    document.querySelectorAll("[data-font]").forEach(function(btn) {
+      btn.classList.toggle("active", btn.dataset.font === savedFont);
+      btn.addEventListener("click", function() {
+        var sz = btn.dataset.font;
+        document.documentElement.style.fontSize = fontSizes[sz] || "16px";
+        localStorage.setItem("fc_font", sz);
+        document.querySelectorAll("[data-font]").forEach(function(b){ b.classList.toggle("active", b === btn); });
       });
     });
 
-    // Roteador
-    Router.on("dashboard",   () => { Pages.dashboard(); });
-    Router.on("phonetics",   () => { Pages.phonetics(); });
-    Router.on("vocabulary",  () => { Pages.vocabulary(); });
-    Router.on("grammar",     () => { Pages.grammar(); });
-    Router.on("conversation",() => { Pages.conversation(); });
-    Router.on("reading",     () => { Pages.reading(); });
-    Router.on("flashcards",  () => { Pages.flashcards(); });
-    Router.on("tests",       () => { Pages.tests(); });
-    Router.on("lab",         () => { Pages.lab(); });
-    Router.on("culture",     () => { Pages.culture(); });
-    Router.on("literature",  () => { Pages.literature(); });
-    Router.on("immersion",   () => { Pages.immersion(); });
-    Router.on("achievements",() => { Pages.achievements(); });
-    Router.on("404",         () => { Router.navigate("dashboard"); });
+    // ── Sidebar ──
+    var hamburger = document.getElementById("hamburger");
+    var sidebar = document.getElementById("sidebar");
+    var overlay = document.getElementById("sidebar-overlay");
+
+    function openSidebar() {
+      if (sidebar) sidebar.classList.add("open");
+      if (overlay) overlay.classList.add("visible");
+      document.body.classList.add("sidebar-open");
+    }
+    function closeSidebar() {
+      if (sidebar) sidebar.classList.remove("open");
+      if (overlay) overlay.classList.remove("visible");
+      document.body.classList.remove("sidebar-open");
+    }
+
+    if (hamburger) hamburger.addEventListener("click", function(e) {
+      e.stopPropagation();
+      sidebar && sidebar.classList.contains("open") ? closeSidebar() : openSidebar();
+    });
+    if (overlay) overlay.addEventListener("click", closeSidebar);
+
+    // ── Nav links ──
+    document.querySelectorAll(".nav-item").forEach(function(el) {
+      el.addEventListener("click", function() { Router.navigate(el.dataset.page); closeSidebar(); });
+      el.addEventListener("keydown", function(e) {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); Router.navigate(el.dataset.page); closeSidebar(); }
+      });
+    });
+
+    // ── Scroll to top ──
+    window.addEventListener("scroll", function() {
+      var btn = document.getElementById("btn-top");
+      if (btn) btn.classList.toggle("visible", window.scrollY > 300);
+    });
+
+    // ── Rotas ──
+    Router.on("dashboard",    function(){ Pages.dashboard(); });
+    Router.on("phonetics",    function(){ Pages.phonetics(); });
+    Router.on("vocabulary",   function(){ Pages.vocabulary(); });
+    Router.on("phrases",      function(){ Pages.phrases(); });
+    Router.on("grammar",      function(){ Pages.grammar(); });
+    Router.on("conversation", function(){ Pages.conversation(); });
+    Router.on("reading",      function(){ Pages.reading(); });
+    Router.on("flashcards",   function(){ Pages.flashcards(); });
+    Router.on("tests",        function(){ Pages.tests(); });
+    Router.on("lab",          function(){ Pages.lab(); });
+    Router.on("culture",      function(){ Pages.culture(); });
+    Router.on("literature",   function(){ Pages.literature(); });
+    Router.on("immersion",    function(){ Pages.immersion(); });
+    Router.on("achievements", function(){ Pages.achievements(); });
+    Router.on("missions",     function(){ Pages.missions(); });
+    Router.on("profile",      function(){ Pages.profile(); });
+    Router.on("404",          function(){ Router.navigate("dashboard"); });
 
     Router.init();
-  }
 
-  return { init, showToast, showAchievement, checkAchievements, updateXPBar };
+    // ── Conquista de primeiro acesso (com delay) ──
+    setTimeout(function() {
+      Storage.unlockAchievement("first_lesson");
+      self.checkAchievements();
+    }, 1800);
+  };
+
+  return self;
 })();
